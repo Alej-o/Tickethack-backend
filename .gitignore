@@ -56,8 +56,6 @@ typings/
 
 # dotenv environment variables file
 .env
-
 CONNECTION_STRING="mongodb+srv://Admin:wBw8V6mhPPxThzwj@cluster0.bnsy9.mongodb.net/tickethack"
-
 # next.js build output
 .next
