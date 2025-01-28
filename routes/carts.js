@@ -6,14 +6,14 @@ const Trip = require('../models/trips');
 
 //Pour supprimer un trajet dans le panier en fonction de l'id
 router.delete("/:id", (req, res) => {
-    Cart.findByIdAndDelete(req.params.id).then(trip => {
-      if (trip) {
-        res.json({ result: true, trips: trip });
-      } else {
-        res.json({ result: false, error: "Trip not found" });
+  Cart.findByIdAndDelete(req.params.id)
+    .then(deletedCart => {
+      if (!deletedCart) {
+        return res.json({ result: false, error: "Cart item not found" });
       }
-    });
-  });
+      res.json({ result: true });
+    })
+});
   // Pour ajouter un element dans le panier en fonction de l'id
   router.post('/save', (req, res) => {
     const tripId = req.body.id;
