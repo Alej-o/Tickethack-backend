@@ -1,7 +1,8 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/cart');
-const Trip = require('../models/Trip');
+const Trip = require('../models/trips');
 
 //Pour supprimer un trajet dans le panier en fonction de l'id
 router.delete("/:id", (req, res) => {
@@ -15,12 +16,12 @@ router.delete("/:id", (req, res) => {
   });
 
 // Pour ajouter un element dans le panier en fonction de l'id
-router.post('/:id', (req, res) => {
-  if (!req.params.id) {
+router.post('/save', (req, res) => {
+  if (!req.body.id) {
     return res.json({ result: false, error: 'Missing trip ID' });
   }
 
-  Trip.findById(req.params.id)
+  Trip.findById(req.body.id)
     .then(tripData => {
       if (!tripData) {
         return res.json({ result: false, error: 'Trip not found' });
@@ -41,8 +42,8 @@ router.post('/:id', (req, res) => {
 
 //Afficher tout ton panier
 router.get("/", (req, res) => {
-    Cart.find().then(carts => {
-      res.json({ allCart: carts });
+    Cart.find().then(data => {
+      res.json({ cart: data });
     });
   });
 
