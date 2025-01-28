@@ -3,7 +3,7 @@ const router = express.Router();
 const Cart = require('../models/cart');
 const Trip = require('../models/Trip');
 
-//Pour supprimer un trajet en fonction de l'id
+//Pour supprimer un trajet dans le panier en fonction de l'id
 router.delete("/:id", (req, res) => {
     Cart.findByIdAndDelete(req.params.id).then(trip => {
       if (trip) {
@@ -14,7 +14,7 @@ router.delete("/:id", (req, res) => {
     });
   });
 
-// Pour ajouter sur cart
+// Pour ajouter un element dans le panier en fonction de l'id
 router.post('/:id', (req, res) => {
   if (!req.params.id) {
     return res.json({ result: false, error: 'Missing trip ID' });
@@ -38,5 +38,12 @@ router.post('/:id', (req, res) => {
       res.json({ result: true, cart: newCartItem });
     });
 });
+
+//Afficher tout ton panier
+router.get("/", (req, res) => {
+    Cart.find().then(carts => {
+      res.json({ allCart: carts });
+    });
+  });
 
 module.exports = router;

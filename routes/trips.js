@@ -24,14 +24,6 @@ router.get('/', (req, res) => {
   })
 });
 
-router.post("/:id", (req, res) => {
-  City.findbyId({ cityName: req.params.cityName}).then(city => {
-    if (city) {
-      res.json({ result: true, weather: city });
-    } else {
-      res.json({ result: false, error: "City not found" });
-    }
-  });
-});
+
 
 module.exports = router;
