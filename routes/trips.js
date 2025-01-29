@@ -1,30 +1,30 @@
 const mongoose = require('mongoose');
 var express = require("express");
 var router = express.Router();
-// const fetch = require("node-fetch");
 const Trip = require('../models/trips');
 // const Cart = require('../models/Cart');
 
 //Pour afficher tous les trajets
 router.get('/', (req, res) => {
-  if (!req.body.departure || !req.body.arrival || !req.body.date) {
+ 
+  if (!req.query.departure || !req.query.arrival || !req.query.date) {
     return res.json({ result: false, error: 'Missing parameters' });
   }
 
-  const startDay = new Date(req.body.date); 
-  const endDay = new Date(req.body.date);
-  endDay.setHours(23, 59, 59, 999); 
+  const startDay = new Date(req.query.date);
+  const endDay = new Date(req.query.date);
+  endDay.setHours(23, 59, 59, 999);
 
-  Trip.find({ 
-    departure: req.body.departure, 
-    arrival: req.body.arrival, 
+  Trip.find({
+    departure: req.query.departure,
+    arrival: req.query.arrival,
     date: { $gte: startDay, $lte: endDay }
   })
   .then(data => {
     if (data.length === 0) {
-      return res.json({ result: false, error: 'Trips not found' });
+      return res.json({ trips: null }); 
     }
-    res.json({ result: true, trips: data });
+    res.json({ trips: data }); 
   });
 });
 
