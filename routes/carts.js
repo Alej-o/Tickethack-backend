@@ -16,7 +16,7 @@ router.delete("/:id", (req, res) => {
 });
   // Pour ajouter un element dans le panier en fonction de l'id
   router.post('/save', (req, res) => {
-    const tripId = req.body.id;
+    const tripId = req.body.tripId;
     if (!tripId) {
       return res.json({ result: false, error: 'Missing trip ID' });
     }
@@ -38,7 +38,7 @@ router.delete("/:id", (req, res) => {
 
 //Afficher tout ton panier
 router.get("/", (req, res) => {
-    Cart.find().then(data => {
+    Cart.find().populate('trip').then(data => {
       res.json({ cart: data });
     });
   });
