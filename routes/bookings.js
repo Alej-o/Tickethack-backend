@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/carts');
-const Trip = require('../models/trips');
+// const Trip = require('../models/trips');
 const Booking = require('../models/bookings');
 
 //Pour ajouter les achats
@@ -18,10 +18,10 @@ router.post('/save', (req, res) => {
       }   
       return Booking.create({ 
         cart: cartData._id,
-        trip: cartData.trip
-      }).then(newBookingItem => {
+        trip: cartData.trip})
+        .then(newBookingItem => {
         return Cart.findByIdAndDelete(cartId)
-          .then(() => newBookingItem);
+        .then(() => newBookingItem);
       });
     })
     .then(newBookingItem => {
